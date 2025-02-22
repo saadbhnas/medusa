@@ -4,8 +4,8 @@ import { LinkDefinition } from "@medusajs/framework/types";
 //import ReviewModuleService from "../../modules/review/service";
 import { CreateReviewWorkflow } from "../create-review";
 //import { container } from "@medusajs/framework";
-import CustomerModule from "@medusajs/medusa/";
-import ReviewModule from "../../modules/review";
+import ReviewModule, { REVIEW_MODULE } from "../../modules/review";
+import { Modules } from "@medusajs/framework/utils";
 
 CreateReviewWorkflow.hooks.review_created(
   async ({ reviews }, { container }) => {
@@ -18,10 +18,10 @@ CreateReviewWorkflow.hooks.review_created(
 
     for (const review of reviews) {
       links.push({
-        [ReviewModule as any]: {
+        [REVIEW_MODULE]: {
           review_id: review.id, // Reference the review ID
         },
-        [CustomerModule as any]: {
+        [Modules.CUSTOMER]: {
           customer_id: review.customer_id, // Reference the customer ID
         },
       });
